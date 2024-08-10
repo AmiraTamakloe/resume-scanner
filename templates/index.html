@@ -30,9 +30,16 @@
         background-color: #0056b3;
       }
     </style>
+    <script>
+      window.onload = function () {
+        document.getElementById('resumeFileInput').value = '';
+        document.getElementById('jobPostingFileInput').value = '';
+      };
+    </script>
   </head>
   <body>
     <h1>Upload your resume and job posting here</h1>
+    <h2></h2>
     <form action="/upload" method="post" enctype="multipart/form-data">
       <div class="upload-content">
         <h2>Resume:</h2>
@@ -45,6 +52,14 @@
         <!-- TODO: Add file preview   -->
       </div>
       <input type="submit" value="Upload File" />
+    </form>
+    <form action="/clear-resume" method="put">
+      <h2>Clear resume</h2>
+      <input type="button" name="resume-deletion" />
+    </form>
+    <form action="/clear-job-file" method="put">
+      <h2>Clear job file</h2>
+      <input type="button" name="job-deletion" />
     </form>
   </body>
 </html>

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from fileinput import filename 
-from distutils.log import debug 
+from setuptools import distutils
+from distutils import debug
 from classes.upload_error import UploadError
 
 app = Flask('AMZ-Flask')
@@ -13,36 +14,40 @@ def index():
 def upload():
     if request.method == 'POST':
         resumeFile = request.files['resume-file']
-        print('resume file is: ');
-        print(resumeFile);
         jobFile = request.files['job-posting-file']
-        print('job file is: ');
-        print(jobFile);
 
-        uploadErrors = []
-        match resumeFile:
-            case None:
-                match jobFile:
-                    case None:
+        uploadErrors = []; 
+
+        # FIXME: The match case requires 3.12 python version, dependencies conflict
+        # Resolved with a venv
+        match resumeFile.filename:
+            case '':
+                match jobFile.filename:
+                    case '':
                         uploadErrors = [UploadError.JOB_POSTING, UploadError.RESUME]
                     case _:
                         uploadErrors = [UploadError.RESUME]
             case _:
-                match resumeFile:
-                    case None:
-                        uploadErrors = [UploadError.RESUME]
-        
+                match jobFile.filename:
+                    case '':
+                        uploadErrors = [UploadError.JOB_POSTING]
+                    case _:
+                        uploadErrors = []
+
         if len(uploadErrors) == 0:
-            return render_template('./upload-result.html')
+            print('no upload errors')
+            return render_template('./upload-result.html', resumeFile=resumeFile, jobFile=jobFile)
         else: 
+            print(uploadErrors)
             return render_template('./index.html', uploadErrors=uploadErrors)
+        
+@app.route('/clear-resume', methods=['PUT'])
+def clearResume():
+    print('clearing')
+    if request.method == 'DELETE':
+        print('deleting')
+        request.form.clear()
 
-
-
-# @app.route('/start')
-# def start():
-#     # Code to start using Flask
-#     return 'Flask is now in use!'
 
 if __name__ == '__main__':
     app.run(debug=True)
