@@ -2,7 +2,7 @@ from PyPDF2 import PdfReader
 
 import re
 
-def cleanDocument(resumeText):
+def clean_document(resumeText):
     resumeText = re.sub('http\S+\s*', ' ', resumeText)  # remove URLs
     resumeText = re.sub('@\S+', '  ', resumeText)  # remove mentions
     resumeText = re.sub('#\S+\s', ' ', resumeText)  # remove hashtags
@@ -13,6 +13,6 @@ def cleanDocument(resumeText):
     return resumeText.lower()
 
 
-def transformPdfToText(file):
+def transform_pdf_to_text(file):
     cv_text = PdfReader(file).pages[0].extract_text().lower()
     return cv_text
