@@ -3,6 +3,7 @@ from fileinput import filename
 from setuptools import distutils
 from distutils import debug
 from classes.upload_error import UploadError
+from model.prediction import predict_category
 
 app = Flask('AMZ-Flask')
 
@@ -36,7 +37,8 @@ def upload():
 
         if len(uploadErrors) == 0:
             print('no upload errors')
-            return render_template('./upload-result.html', resumeFile=resumeFile, jobFile=jobFile)
+            category = predict_category(resumeFile)
+            return render_template('./upload-result.html', category=category, jobFile=jobFile)
         else: 
             print(uploadErrors)
             return render_template('./index.html', uploadErrors=uploadErrors)
