@@ -3,7 +3,7 @@ from fileinput import filename
 from setuptools import distutils
 from distutils import debug
 from classes.upload_error import UploadError
-from model.prediction import predict_category
+from model.model_training import predict_category
 
 app = Flask('AMZ-Flask')
 
@@ -19,8 +19,6 @@ def upload():
 
         uploadErrors = []; 
 
-        # FIXME: The match case requires 3.12 python version, dependencies conflict
-        # Resolved with a venv
         match resumeFile.filename:
             case '':
                 match jobFile.filename:
