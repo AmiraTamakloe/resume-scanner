@@ -40,9 +40,9 @@ class Categorizer(object):
             category_name = self.label[index]
             self.mapping[label_val] = category_name
 
-        print("Encoded Label : Category Name")
-        for label_val, category_name in self.mapping.items():
-            print(f"{label_val} : {category_name}")
+        # print("Encoded Label : Category Name")
+        # for label_val, category_name in self.mapping.items():
+        #     print(f"{label_val} : {category_name}")
 
 
 class Model_Training(object):
@@ -63,7 +63,7 @@ class Model_Training(object):
 
         matrix = self.required_text.todense()
         dfMatrix = pd.DataFrame(matrix)
-        print(dfMatrix[:5])
+        # print(dfMatrix[:5])
         dfMatrix.to_csv('output.csv', index=False)
         return self.tfidf
 

@@ -11,8 +11,37 @@ app = Flask('AMZ-Flask')
 def index():
     return render_template('./index.html')
 
-@app.route('/upload', methods = ['POST'])
-def upload():
+@app.route('/resume-upload', methods = ['GET'])
+def naviguate_resume_upload():
+    print('GET')
+    return render_template('./resume-upload.html', uploadErrors=[])
+
+@app.route('/resume-posting-upload', methods = ['GET'])
+def naviguate_resume_posting():
+    print('GET')
+    return render_template('./resume-posting-upload.html', uploadErrors=[])
+
+
+@app.route('/resume-upload', methods = ['POST'])
+def upload_resume():
+    if request.method == 'POST':
+        resumeFile = request.files['resume-file']
+
+        uploadErrors = []; 
+        if(resumeFile.filename == ''):
+            uploadErrors = [UploadError.RESUME]
+
+        if len(uploadErrors) == 0:
+            print('no upload errors')
+            category = predict_category(resumeFile)
+            return render_template('./category-result.html', category=category)
+        else:
+            print(uploadErrors)
+            return render_template('./resume-upload.html', uploadErrors=uploadErrors)
+        
+
+@app.route('/resume-posting-upload', methods = ['POST'])
+def upload_resume_posting():
     if request.method == 'POST':
         resumeFile = request.files['resume-file']
         jobFile = request.files['job-posting-file']
@@ -36,10 +65,10 @@ def upload():
         if len(uploadErrors) == 0:
             print('no upload errors')
             category = predict_category(resumeFile)
-            return render_template('./upload-result.html', category=category, jobFile=jobFile)
-        else: 
+            return render_template('./category-result.html', category=category, jobFile=jobFile)
+        else:
             print(uploadErrors)
-            return render_template('./index.html', uploadErrors=uploadErrors)
+            return render_template('./resume-upload.html', uploadErrors=uploadErrors)
         
 @app.route('/clear-resume', methods=['PUT'])
 def clearResume():

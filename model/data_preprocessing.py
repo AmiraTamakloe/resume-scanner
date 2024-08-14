@@ -1,5 +1,4 @@
 from PyPDF2 import PdfReader
-
 import re
 
 def clean_document(resumeText):

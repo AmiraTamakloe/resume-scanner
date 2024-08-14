@@ -1,65 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Message Board - {% block title %}{% endblock title %}</title>
-    <!-- <link rel="stylesheet" href="/static/styles.css" /> -->
+    <title>Welcome to Resume Scanner site</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        text-align: center;
-        margin-top: 50px;
-      }
-      .container {
-        width: 50%;
-        margin: 0 auto;
-      }
-      h1 {
+        background-color: #f4f4f4;
         color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
       }
-      .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-top: 20px;
+
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #007bff;
+        text-align: center;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      input[type='button'] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 4px;
         background-color: #007bff;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
         transition: background-color 0.3s ease;
       }
-      .btn:hover {
+
+      input[type='button']:hover {
         background-color: #0056b3;
       }
     </style>
-    <script>
-      window.onload = function () {
-        document.getElementById('resumeFileInput').value = '';
-        document.getElementById('jobPostingFileInput').value = '';
-      };
-    </script>
   </head>
   <body>
-    <h1>Upload your resume and job posting here</h1>
-    <h2></h2>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <div class="upload-content">
-        <h2>Resume:</h2>
-        <input type="file" name="resume-file" id="resumeFileInput" />
-        <!-- TODO: Add file preview   -->
+    <div class="container">
+      <h1>Welcome to Resume Scanner site</h1>
+      <div class="button-container">
+        <form action="/resume-upload" method="get">
+          <input
+            type="button"
+            value="Predict Resume Category"
+            onclick="window.location.href='/resume-upload'"
+          />
+        </form>
+        <form action="/resume-posting-upload" method="get">
+          <input
+            type="button"
+            value="Resume Enhancement Tips For Job Posting"
+            onclick="window.location.href='/resume-posting-upload'"
+          />
+        </form>
       </div>
-      <div class="upload-content">
-        <h2>Job posting:</h2>
-        <input type="file" name="job-posting-file" id="jobPostingFileInput" />
-        <!-- TODO: Add file preview   -->
-      </div>
-      <input type="submit" value="Upload File" />
-    </form>
-    <form action="/clear-resume" method="put">
-      <h2>Clear resume</h2>
-      <input type="button" name="resume-deletion" />
-    </form>
-    <form action="/clear-job-file" method="put">
-      <h2>Clear job file</h2>
-      <input type="button" name="job-deletion" />
-    </form>
+    </div>
   </body>
 </html>
