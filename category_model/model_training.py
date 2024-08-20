@@ -1,6 +1,6 @@
 import pandas as pd
 
-from model.data_preprocessing import clean_document
+from category_model.data_preprocessing import clean_document
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -10,7 +10,7 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import accuracy_score
 
 import pandas as pd
-from model.data_preprocessing import clean_document, transform_pdf_to_text
+from category_model.data_preprocessing import clean_document, transform_pdf_to_text
 
 
 class Categorizer(object):
