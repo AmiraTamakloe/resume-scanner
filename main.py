@@ -3,7 +3,7 @@ from fileinput import filename
 from setuptools import distutils
 from distutils import debug
 from classes.upload_error import UploadError
-from model.model_training import predict_category
+from category_model.model_training import predict_category
 
 app = Flask('AMZ-Flask')
 
